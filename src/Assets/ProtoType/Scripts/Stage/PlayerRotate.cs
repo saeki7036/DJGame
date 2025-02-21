@@ -1,6 +1,4 @@
-using TreeEditor;
 using UnityEngine;
-using static UnityEditor.U2D.ScriptablePacker;
 
 public class PlayerRotate : MonoBehaviour
 {
@@ -22,24 +20,25 @@ public class PlayerRotate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) && pos < 2)
+        float input = 0;//Clickforposition.inputvalue;
+        if ((Input.GetKeyDown(KeyCode.W) || input  == 1)&& pos < 2)
         {
             pos++;
             transform.position = FlontTransform.position;
         }
 
-        if (Input.GetKeyDown(KeyCode.S)&& pos > 0)
+        if ((Input.GetKeyDown(KeyCode.S) || input  == -1)&& pos > 0)
         {
             transform.position = BackTransform.position;
             pos--;
         }
-        float input = 0;
+       
 
-        if (Input.GetKey(KeyCode.LeftArrow))
-            input = 1;
-        if (Input.GetKey(KeyCode.RightArrow))
-            input = -1;
+        //if (Input.GetKey(KeyCode.LeftArrow))
+        //    input = 1;
+        //if (Input.GetKey(KeyCode.RightArrow))
+        //    input = -1;
 
-        transform.RotateAround(TargetObject.transform.position, Vector3.up, input * speed * Time.deltaTime);
+        //transform.RotateAround(TargetObject.transform.position, Vector3.up, input * speed * Time.deltaTime);
     }
 }
