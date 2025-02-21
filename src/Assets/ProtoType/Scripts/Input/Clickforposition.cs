@@ -1,10 +1,11 @@
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Clickforposition : MonoBehaviour
 {
-
+    
     float widthClampMax = Screen.width;
     float heightClampMax = Screen.height;
     float ClampMin = 0;
@@ -16,9 +17,14 @@ public class Clickforposition : MonoBehaviour
     [SerializeField]GameObject circle;
     [SerializeField] GameObject Stage;
     [SerializeField] int rotationAdjust = 100;
-
+    public static int inputvalue = 0;
     int Y = 0;
     int X = 0;
+
+
+    public void SetRotationAdjust(int value) => rotationAdjust = value;
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,7 +33,7 @@ public class Clickforposition : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         
         Vector3 deltaPosition = Vector3.zero;
@@ -63,19 +69,23 @@ public class Clickforposition : MonoBehaviour
             //rotateDecrease = 0;
         }
 
+        inputvalue = 0;
         if (deltaPosition.x > 25)
-        { 
+        {
+            inputvalue = 1;
             Debug.Log("‰E");
             
         }
         else if (deltaPosition.x < -25) 
         {
+            inputvalue = -1;
             Debug.Log("¶"); 
         }
         
 
         if (deltaPosition.y > 0) 
         {
+           
             Y = 1;
             rotateDecrease = deltaPosition.y;
         }
