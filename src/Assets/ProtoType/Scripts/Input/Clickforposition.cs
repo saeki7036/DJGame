@@ -14,6 +14,7 @@ public class Clickforposition : MonoBehaviour
     float rotateDecrease = 0;   
 
     [SerializeField]GameObject circle;
+    [SerializeField] GameObject Stage;
     [SerializeField] int rotationAdjust = 100;
 
     int Y = 0;
@@ -34,7 +35,6 @@ public class Clickforposition : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             Before1flamePosition = MouseClamp(Input.mousePosition);
-
         }
 
         if (Input.GetMouseButton(0))
@@ -55,11 +55,6 @@ public class Clickforposition : MonoBehaviour
                 deltaPosition = (mousePosition - Before1flamePosition) * -1;
                 
             }
-            
-            
-            
-
-
 
         }
 
@@ -101,11 +96,13 @@ public class Clickforposition : MonoBehaviour
             case 2:
 
                 circle.transform.rotation *= quaternion.RotateY(deltaPosition.y / rotationAdjust);
+                Stage.transform.rotation *= quaternion.RotateY(deltaPosition.y / rotationAdjust);
                 break;
 
             case 0:
 
                 circle.transform.rotation *= quaternion.RotateY(rotateDecrease / rotationAdjust);
+                Stage.transform.rotation *= quaternion.RotateY(rotateDecrease / rotationAdjust);
                 break;
         }
 
