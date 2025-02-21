@@ -11,6 +11,7 @@ public class Clickforposition : MonoBehaviour
     float ClampMin = 0;
     Vector3 Before1flamePosition = Vector3.zero;
     Vector3 mousePosition = Vector3.zero;
+    Vector3 deltaPosition = Vector3.zero;
 
     float rotateDecrease = 0;   
 
@@ -32,13 +33,11 @@ public class Clickforposition : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void Update()
     {
-        
-        Vector3 deltaPosition = Vector3.zero;
 
-        if(Input.GetMouseButtonDown(0))
+        
+        if (Input.GetMouseButtonDown(0))
         {
             Before1flamePosition = MouseClamp(Input.mousePosition);
         }
@@ -49,7 +48,7 @@ public class Clickforposition : MonoBehaviour
             mousePosition = MouseClamp(Input.mousePosition);
 
             Vector3 circleScreenPosition = Camera.main.WorldToScreenPoint(circle.transform.position);
-            Debug.Log("dP : CP" + mousePosition + ":" + circleScreenPosition);
+            Debug.Log("dP : B1P" + mousePosition + ":" + Before1flamePosition);
 
             if (mousePosition.x > circleScreenPosition.x)
             {
@@ -59,10 +58,21 @@ public class Clickforposition : MonoBehaviour
             else
             {
                 deltaPosition = (mousePosition - Before1flamePosition) * -1;
-                
+
             }
 
         }
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        
+        
+
+
+
+        
 
         if (Input.GetMouseButtonUp(0))
         {
@@ -85,7 +95,6 @@ public class Clickforposition : MonoBehaviour
 
         if (deltaPosition.y > 0) 
         {
-           
             Y = 1;
             rotateDecrease = deltaPosition.y;
         }
