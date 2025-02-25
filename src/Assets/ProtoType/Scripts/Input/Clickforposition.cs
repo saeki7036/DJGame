@@ -18,6 +18,7 @@ public class Clickforposition : MonoBehaviour
     [SerializeField]GameObject circle;
     [SerializeField] GameObject Stage;
     [SerializeField] int rotationAdjust = 100;
+    [SerializeField] Transform PlayerTransform;
     public static int inputvalue = 0;
     int Y = 0;
     int X = 0;
