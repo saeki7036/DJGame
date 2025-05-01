@@ -72,21 +72,32 @@ public class Syuva : MonoBehaviour
             Player.velocity = new Vector3(Player.velocity.x, Player.velocity.y, -10.0f);
         }
         */
-        MousePost_X = Mathf.Clamp(Input.GetAxis("Mouse X"),-1,1);
-        MousePost_Y = Mathf.Clamp(Input.GetAxis("Mouse Y"), -1, 1);
+        if (Input.GetMouseButton(0))
+        {
+            MousePost_X = Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1);
+            MousePost_Y = Mathf.Clamp(Input.GetAxis("Mouse Y"), -1, 1);
+
+        }
+       
 
         Vector2 MousePost = new Vector2(MousePost_X, MousePost_Y).normalized;
-        Vector3 Force = new Vector3(MousePost.x + transform.forward.x, 0f, MousePost.y + transform.forward.z).normalized;
+        
+        Vector3 Force = new Vector3(MousePost_X +transform.forward.x, 0f, MousePost_Y + transform.forward.z).normalized;
 
-        bool MousePostCheck = (Mathf.Abs(MousePost_X) == 1 || Mathf.Abs(MousePost_Y) == 1);
+        bool MousePostCheck = (Mathf.Abs(MousePost_X) >= 1 || Mathf.Abs(MousePost_Y) >= 1);
 
         if (MousePostCheck && Dash_Flag == false)
         {
-            Player.AddForce(Force * Max_Speed, ForceMode.Impulse);
+            Debug.Log(MousePost);
+           Vector3 velocity_ = Force * Max_Speed;
+           Player.linearVelocity = velocity_;
+
+            //Player.AddForce(Force * Max_Speed, ForceMode.Impulse);
             Dash_Flag = true;
         }
         else if(!MousePostCheck && Dash_Flag == true)
             Dash_Flag = false;
+
 
         Vector3 velocity = Player.linearVelocity;
         Vector3 Look = new(velocity.x, 0, velocity.z);
@@ -94,16 +105,21 @@ public class Syuva : MonoBehaviour
 
         targetObject.transform.localPosition = Look.normalized;
 
-        if (Look.sqrMagnitude > 0.01f)
+        if (Look.sqrMagnitude > 0.01f && MousePostCheck)
         {
             Quaternion target = Quaternion.LookRotation(new Vector3(targetObject.transform.localPosition.x, 0, targetObject.transform.localPosition.z));
             //Quaternion.Lerp(Player.transform.rotation, target,1f);
             Player.transform.rotation = target;
             
         }
-
+        targetObject.transform.localPosition = Vector3.zero;
         VelocityText.text ="x:" + Player.linearVelocity.x.ToString() + "\nz:" +Player.linearVelocity.z.ToString();
 
+        RetryButton();
+    }
+
+    void RetryButton()
+    {
         if (Input.GetKeyDown(KeyCode.P))
         {
             transform.position = new()
@@ -112,6 +128,8 @@ public class Syuva : MonoBehaviour
                 y = transform.position.y,
                 z = 0
             };
+
+            Player.linearVelocity = Vector3.zero;
         }
     }
 }
